@@ -7,11 +7,18 @@ skip-lint = false
 [programs.localnet]
 priceescrow = "A1pMdJC1Q75EHemWeAUqSr941VctKQ3vBn9tXg8vkeaN"
 
+
+[programs.devnet]
+priceescrow = "A1pMdJC1Q75EHemWeAUqSr941VctKQ3vBn9tXg8vkeaN"
+
+
+
+
 [registry]
 url = "https://api.apr.dev"
 
 [provider]
-cluster = "Localnet"
+cluster = "devnet"
 wallet = "~/.config/solana/id.json"
 
 [scripts]
