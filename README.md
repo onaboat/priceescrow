@@ -27,57 +27,70 @@ This program enables conditional SOL transfers based on SOL/USD price thresholds
 - [Node.js](https://nodejs.org/) v16 or later
 - [Yarn](https://yarnpkg.com/)
 
-## Installation 
+## Installation
 
-git clone 
+```bash
+git clone <repository-url>
 cd priceescrow
 yarn install
+```
 
 ## Build
+
+```bash
 anchor build
+```
 
 ## Test
+
+```bash
 anchor test
+```
 
 ## Program Architecture
 
 The program consists of three main instructions:
 
-1. **Deposit**: Creates an escrow account and deposits SOL with a specified unlock price
-2. **Withdraw**: Withdraws SOL from the escrow when price conditions are met
-3. **Close**: Closes the escrow account and returns rent
+1. **Deposit**: Creates an escrow account and deposits SOL with a specified unlock price.
+2. **Withdraw**: Withdraws SOL from the escrow when price conditions are met.
+3. **Close**: Closes the escrow account and returns rent.
 
 ## Example Usage
-typescript
+
+```typescript
 // Create an escrow that unlocks when SOL price reaches $25
 await program.methods
-.deposit(new BN(25_000_000)) // $25.00 in 6 decimals
-.accounts({
-user: wallet.publicKey,
-escrowAccount: escrow,
-systemProgram: SystemProgram.programId,
-})
-.signers([wallet])
-.rpc();
+  .deposit(new BN(25_000_000)) // $25.00 in 6 decimals
+  .accounts({
+    user: wallet.publicKey,
+    escrowAccount: escrow,
+    systemProgram: SystemProgram.programId,
+  })
+  .signers([wallet])
+  .rpc();
+
 // Withdraw when conditions are met
 await program.methods
-.withdraw()
-.accounts({
-user: wallet.publicKey,
-escrowAccount: escrow,
-switchboardFeed: SOL_USD_SWITCHBOARD_FEED,
-})
-.signers([wallet])
-.rpc();
+  .withdraw()
+  .accounts({
+    user: wallet.publicKey,
+    escrowAccount: escrow,
+    switchboardFeed: SOL_USD_SWITCHBOARD_FEED,
+  })
+  .signers([wallet])
+  .rpc();
+```
 
 ## Error Handling
 
 The program includes custom error types:
-- `SolPriceBelowUnlockPrice`: Attempted withdrawal when SOL price is below unlock price
-- `InvalidSwitchboardFeed`: Invalid or stale price feed data
+
+- `SolPriceBelowUnlockPrice`: Attempted withdrawal when SOL price is below unlock price.
+- `InvalidSwitchboardFeed`: Invalid or stale price feed data.
 
 ## Security Considerations
 
-- Price feeds are verified for staleness
-- Program uses PDAs to prevent account spoofing
-- Escrow accounts are owned by the program
+- Price feeds are verified for staleness.
+- Program uses PDAs to prevent account spoofing.
+- Escrow accounts are owned by the program.
+
