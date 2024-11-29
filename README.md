@@ -53,7 +53,7 @@ anchor build
 anchor test --skip-deploy
 ```
 
-test screenshot:
+tests screenshot:
 
 ![test](images/Test.png)
 
