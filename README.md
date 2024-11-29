@@ -1,24 +1,29 @@
-# Price Escrow
+# Lazy Long:  Profit-Taking from SOL Holdings (MVP)
 
-A Solana program that creates price-locked escrow accounts using SOL/USD price feeds from Switchboard.
+The Lazy Long project is a proof of concept for smart contract profit management. It enables users to deposit SOL into a program that automatically manages their holdings and takes  profits when the value of SOL increases by a certain percentage. This allows users to benefit from price gains without the need to manually track or manage their assets.
 
 ## Overview
 
-This program enables conditional SOL transfers based on SOL/USD price thresholds. Users can lock SOL in an escrow account that only becomes withdrawable when SOL reaches a specified price point, creating opportunities for automated price-based trading strategies.
+This program enables conditional SOL transfers based on SOL/USD price thresholds. Users can lock SOL in an escrow account that only becomes withdrawable when SOL reaches a specified price point, creating opportunities for  price-based trading strategies.
 
 ## Features
 
-- Create price-locked escrow accounts
-- Deposit SOL with specific price unlock conditions
-- Withdraw SOL when price conditions are met
-- Close escrow accounts and recover rent
-- Real-time price feeds from Switchboard oracles
-- Devnet support
+- Deposit SOL directly into the program, securely held in a Program Derived Address (PDA).
+- Record the initial price of SOL using a reliable price oracle.
+- An off-chain service monitors the price of SOL and triggers the smart contract when the price increases by 10%.
+- User can withdraw 10% of SOL value as profit when the price condition is met.
+- Update the reference price after every successful profit-taking event to ensure future gains are tracked appropriately.
+- Create price-locked escrow accounts.
+- Close escrow accounts and recover rent.
+- Real-time price feeds from Switchboard oracles.
+- Devnet support.
 
 ## Live Deployment
 
-- Devnet Program ID: `A1pMdJC1Q75EHemWeAUqSr941VctKQ3vBn9tXg8vkeaN`
-- Switchboard SOL/USD Feed: [Latest Price Data](https://app.switchboard.xyz/solana/devnet/feed/GvDMxPzN1sCj7L26YDK2HnMRXEQmQ2aemov8YBtPS7vR)
+- Devnet Program ID: `3xdEMhH9Dm8WZR2uWwnZwazc9dtYwRubDerEptEEMpcd`
+- [Program Explorer](https://solscan.io/account/3xdEMhH9Dm8WZR2uWwnZwazc9dtYwRubDerEptEEMpcd?cluster=devnet)
+- [Example Withdrawal Transaction](https://solscan.io/tx/ncP3hVfa6PjVBoV318Ga9DDuocqjFoDsuYxtgaKQTnAgkjNKDFvbkjW5KuY9jQyprL5JzraeRxxakBRm1TzzQTh?cluster=devnet)
+
 
 ## Prerequisites
 

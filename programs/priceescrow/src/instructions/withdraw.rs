@@ -11,10 +11,6 @@ pub fn withdraw_handler(ctx: Context<Withdraw>) -> Result<()> {
     let escrow = &mut ctx.accounts.escrow_account;
  
     let current_sol_price: f64 = feed.get_result()?.try_into()?;
-
-    // removed as causing issues with tests and devnet
-    // feed.check_staleness(Clock::get().unwrap().unix_timestamp, 3600)
-    //     .map_err(|_| error!(EscrowErrorCode::StaleFeed))?;
  
     msg!("Current SOL price is {}", current_sol_price);
     msg!("Unlock price is {}", escrow.unlock_price);
@@ -23,9 +19,33 @@ pub fn withdraw_handler(ctx: Context<Withdraw>) -> Result<()> {
         return Err(EscrowErrorCode::SolPriceBelowUnlockPrice.into());
     }
  
-    // Calculate exactly 50% of the escrow amount
-    let withdrawal_amount = (escrow.escrow_amount as u128 * 50 / 100) as u64;
-    msg!("Withdrawing {} lamports (30% of {})", withdrawal_amount, escrow.escrow_amount);
+    // Calculate price increase percentage with a maximum cap of 100%
+    let price_gain_percentage = ((current_sol_price - escrow.unlock_price) / escrow.unlock_price * 100.0)
+        .floor() // Round down to nearest integer
+        .clamp(0.0, 100.0) as u64; // Cap at 100% maximum withdrawal
+    
+    // Ensure there's actually a gain
+    if price_gain_percentage == 0 {
+        return Err(EscrowErrorCode::NoGainToWithdraw.into());
+    }
+    
+    // Calculate withdrawal amount based on capped gain percentage
+    let withdrawal_amount = (escrow.escrow_amount as u128 * price_gain_percentage as u128 / 100) as u64;
+    
+    // Ensure withdrawal amount is not zero and not greater than escrow balance
+    if withdrawal_amount == 0 {
+        return Err(EscrowErrorCode::WithdrawalTooSmall.into());
+    }
+    if withdrawal_amount > escrow.escrow_amount {
+        return Err(EscrowErrorCode::InsufficientFunds.into());
+    }
+
+    msg!(
+        "Price gain: {}%, withdrawing {} lamports from {}",
+        price_gain_percentage,
+        withdrawal_amount,
+        escrow.escrow_amount
+    );
     
     // Update the escrow amount
     escrow.escrow_amount = escrow.escrow_amount.checked_sub(withdrawal_amount)

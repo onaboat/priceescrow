@@ -9,7 +9,7 @@ pub use constants::*;
 pub use instructions::*;
 pub use state::*;
 
-declare_id!("A1pMdJC1Q75EHemWeAUqSr941VctKQ3vBn9tXg8vkeaN");
+declare_id!("3xdEMhH9Dm8WZR2uWwnZwazc9dtYwRubDerEptEEMpcd");
 
 #[program]
 pub mod priceescrow {

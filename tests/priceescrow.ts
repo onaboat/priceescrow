@@ -19,7 +19,7 @@ const SOL_USD_SWITCHBOARD_FEED = new PublicKey(
 const ESCROW_SEED = "ESCROWSEED";
 const DEVNET_RPC_URL = "https://api.devnet.solana.com";
 const CONFIRMATION_COMMITMENT = "confirmed";
-const PRICE_OFFSET = 10;
+const PRICE_OFFSET = 50;
 const ESCROW_AMOUNT = new anchor.BN(1000);
 const EXPECTED_ERROR_MESSAGE = "SOL price is below unlock price.";
  

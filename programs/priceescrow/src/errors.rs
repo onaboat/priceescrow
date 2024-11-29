@@ -6,4 +6,10 @@ pub enum EscrowErrorCode {
     StaleFeed,
     #[msg("SOL price is below unlock price")]
     SolPriceBelowUnlockPrice,
+    #[msg("Withdrawal amount is too small")]
+    WithdrawalTooSmall,
+    #[msg("Insufficient funds to withdraw")]
+    InsufficientFunds,
+    #[msg("No gain to withdraw")]
+    NoGainToWithdraw,
 }
