@@ -25,6 +25,7 @@ This program enables conditional SOL transfers based on SOL/USD price thresholds
 - [Example Withdrawal Transaction](https://solscan.io/tx/ncP3hVfa6PjVBoV318Ga9DDuocqjFoDsuYxtgaKQTnAgkjNKDFvbkjW5KuY9jQyprL5JzraeRxxakBRm1TzzQTh?cluster=devnet)
 
 
+
 ## Prerequisites
 
 - [Solana Tool Suite](https://docs.solana.com/cli/install-solana-cli-tools) v1.17 or later
@@ -49,7 +50,7 @@ anchor build
 ## Test
 
 ```bash
-anchor test
+anchor test --skip-deploy
 ```
 
 ## Program Architecture
