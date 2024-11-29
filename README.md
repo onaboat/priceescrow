@@ -53,6 +53,9 @@ anchor build
 anchor test --skip-deploy
 ```
 
+test screenshot:
+![test](images/Screenshot%202024-11-29%20at%201.40.33%20PM.png)
+
 ## Program Architecture
 
 The program consists of three main instructions:
